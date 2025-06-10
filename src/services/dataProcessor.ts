@@ -1,3 +1,4 @@
+
 import Papa from 'papaparse';
 
 export interface ProcessedCustomerData {
@@ -36,9 +37,7 @@ export class DataProcessor {
     const text = await file.text();
     const data = JSON.parse(text);
     const array = Array.isArray(data) ? data : [data];
-    return array
-      .map((item, index) => this.normalizeCustomerData(item, index))
-      .filter((item): item is ProcessedCustomerData => item !== null);
+    return array.map((item, index) => this.normalizeCustomerData(item, index)).filter(Boolean);
   }
 
   static normalizeCustomerData(row: any, index: number): ProcessedCustomerData | null {
