@@ -9,13 +9,237 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      campaigns: {
+        Row: {
+          click_rate: number | null
+          conversion_rate: number | null
+          created_at: string | null
+          id: string
+          name: string
+          roi: number | null
+          segment_id: number | null
+          sent_at: string | null
+          status: string | null
+        }
+        Insert: {
+          click_rate?: number | null
+          conversion_rate?: number | null
+          created_at?: string | null
+          id?: string
+          name: string
+          roi?: number | null
+          segment_id?: number | null
+          sent_at?: string | null
+          status?: string | null
+        }
+        Update: {
+          click_rate?: number | null
+          conversion_rate?: number | null
+          created_at?: string | null
+          id?: string
+          name?: string
+          roi?: number | null
+          segment_id?: number | null
+          sent_at?: string | null
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaigns_segment_id_fkey"
+            columns: ["segment_id"]
+            isOneToOne: false
+            referencedRelation: "segments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      customer_analytics: {
+        Row: {
+          avg_order_value: number | null
+          avg_time_between_purchases: number | null
+          bounce_rate: number | null
+          days_since_last_visit: number | null
+          engagement_score: number | null
+          purchase_frequency: number | null
+          session_duration: number | null
+          total_purchases: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          avg_order_value?: number | null
+          avg_time_between_purchases?: number | null
+          bounce_rate?: number | null
+          days_since_last_visit?: number | null
+          engagement_score?: number | null
+          purchase_frequency?: number | null
+          session_duration?: number | null
+          total_purchases?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          avg_order_value?: number | null
+          avg_time_between_purchases?: number | null
+          bounce_rate?: number | null
+          days_since_last_visit?: number | null
+          engagement_score?: number | null
+          purchase_frequency?: number | null
+          session_duration?: number | null
+          total_purchases?: number | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customer_analytics_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      dashboard_metrics: {
+        Row: {
+          id: number
+          metric_name: string
+          metric_type: string | null
+          metric_value: number
+          updated_at: string | null
+        }
+        Insert: {
+          id?: number
+          metric_name: string
+          metric_type?: string | null
+          metric_value: number
+          updated_at?: string | null
+        }
+        Update: {
+          id?: number
+          metric_name?: string
+          metric_type?: string | null
+          metric_value?: number
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      segments: {
+        Row: {
+          avg_order_value: number | null
+          characteristics: Json | null
+          color: string | null
+          conversion_rate: number | null
+          created_at: string | null
+          description: string | null
+          id: number
+          name: string
+          user_count: number | null
+        }
+        Insert: {
+          avg_order_value?: number | null
+          characteristics?: Json | null
+          color?: string | null
+          conversion_rate?: number | null
+          created_at?: string | null
+          description?: string | null
+          id?: number
+          name: string
+          user_count?: number | null
+        }
+        Update: {
+          avg_order_value?: number | null
+          characteristics?: Json | null
+          color?: string | null
+          conversion_rate?: number | null
+          created_at?: string | null
+          description?: string | null
+          id?: number
+          name?: string
+          user_count?: number | null
+        }
+        Relationships: []
+      }
+      user_events: {
+        Row: {
+          event_data: Json | null
+          event_type: string
+          id: string
+          timestamp: string | null
+          user_id: string | null
+          value: number | null
+        }
+        Insert: {
+          event_data?: Json | null
+          event_type: string
+          id?: string
+          timestamp?: string | null
+          user_id?: string | null
+          value?: number | null
+        }
+        Update: {
+          event_data?: Json | null
+          event_type?: string
+          id?: string
+          timestamp?: string | null
+          user_id?: string | null
+          value?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_events_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      users: {
+        Row: {
+          created_at: string | null
+          email: string
+          first_name: string | null
+          id: string
+          last_activity: string | null
+          last_name: string | null
+          segment_id: number | null
+          total_orders: number | null
+          total_spent: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          first_name?: string | null
+          id?: string
+          last_activity?: string | null
+          last_name?: string | null
+          segment_id?: number | null
+          total_orders?: number | null
+          total_spent?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          first_name?: string | null
+          id?: string
+          last_activity?: string | null
+          last_name?: string | null
+          segment_id?: number | null
+          total_orders?: number | null
+          total_spent?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_sample_event: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
