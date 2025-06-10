@@ -1,5 +1,5 @@
-
 import { motion } from 'framer-motion';
+import { Link, useLocation } from 'react-router-dom';
 import { 
   BarChart3, 
   Users, 
@@ -20,15 +20,17 @@ interface NavigationProps {
 }
 
 export const Navigation = ({ sidebarOpen, setSidebarOpen }: NavigationProps) => {
+  const location = useLocation();
+
   const menuItems = [
-    { icon: Home, label: 'Dashboard', active: true },
-    { icon: Users, label: 'Segments' },
-    { icon: Target, label: 'Campaigns' },
-    { icon: TrendingUp, label: 'Analytics' },
-    { icon: Brain, label: 'AI Models' },
-    { icon: Database, label: 'Data Sources' },
-    { icon: Zap, label: 'Automation' },
-    { icon: Settings, label: 'Settings' }
+    { icon: Home, label: 'Dashboard', path: '/' },
+    { icon: Users, label: 'Segments', path: '/segments' },
+    { icon: Target, label: 'Campaigns', path: '/campaigns' },
+    { icon: TrendingUp, label: 'Analytics', path: '/analytics' },
+    { icon: Brain, label: 'AI Models', path: '/ai-models' },
+    { icon: Database, label: 'Data Sources', path: '/data-sources' },
+    { icon: Zap, label: 'Automation', path: '/automation' },
+    { icon: Settings, label: 'Settings', path: '/settings' }
   ];
 
   return (
@@ -65,24 +67,31 @@ export const Navigation = ({ sidebarOpen, setSidebarOpen }: NavigationProps) => 
 
       {/* Menu Items */}
       <div className="p-2 space-y-1 bg-gradient-to-b from-purple-50 to-pink-50 h-full">
-        {menuItems.map((item, index) => (
-          <motion.button
-            key={item.label}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.05 }}
-            className={`w-full flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-200 group font-bold border-2 ${
-              item.active 
-                ? 'bg-black text-white border-black shadow-brutal' 
-                : 'text-black hover:bg-white hover:border-black hover:shadow-brutal border-transparent'
-            }`}
-          >
-            <item.icon className={`w-5 h-5 ${item.active ? 'text-white' : 'text-black group-hover:text-black'}`} />
-            {sidebarOpen && (
-              <span className="font-black text-sm">{item.label}</span>
-            )}
-          </motion.button>
-        ))}
+        {menuItems.map((item, index) => {
+          const isActive = location.pathname === item.path;
+          return (
+            <motion.div
+              key={item.label}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.05 }}
+            >
+              <Link
+                to={item.path}
+                className={`w-full flex items-center space-x-3 px-3 py-3 rounded-xl transition-all duration-200 group font-bold border-2 ${
+                  isActive 
+                    ? 'bg-black text-white border-black shadow-brutal' 
+                    : 'text-black hover:bg-white hover:border-black hover:shadow-brutal border-transparent'
+                }`}
+              >
+                <item.icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-black group-hover:text-black'}`} />
+                {sidebarOpen && (
+                  <span className="font-black text-sm">{item.label}</span>
+                )}
+              </Link>
+            </motion.div>
+          );
+        })}
       </div>
 
       {/* Status Indicator */}
